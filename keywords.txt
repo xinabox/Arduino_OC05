@@ -3,21 +3,21 @@
 #######################################
 
 #######################################
-# Instance				(KEYWORD1)
+# Instance	(KEYWORD1)
 #######################################
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-begin KEYWORD2
-reset KEYWORD2
-sleep KEYWORD2
-setPWMFreq  KEYWORD2
-setPWM  KEYWORD2
+begin	KEYWORD2
+reset	KEYWORD2
+sleep	KEYWORD2
+setPWMFreq	KEYWORD2
+setPWM	KEYWORD2
 
 #######################################
-# Constants 			(LITERAL1)
+# Constants	(LITERAL1)
 #######################################
 
 OUT0	LITERAL1
