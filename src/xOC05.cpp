@@ -1,8 +1,22 @@
-#include "xOC05.h"
+/*
+  This is a library for the OC04\5
+  Servo Driver
+  
+  The board uses I2C for communication.
+  
+  The board communicates with the follwoing I2C device:
+  - PCA9685
+*/
 
+#include "xOC05.h"
+/*--Public Class Function--*/
+
+/*************************************************************
+  Constructor
+*************************************************************/
 xOC05::xOC05(void)
 {
-  PCA9685_I2C_ADDRESS = 0x78;
+  PCA9685_I2C_ADDRESS = PCA9685_I2C_ADDR;
 }
 
 xOC05::xOC05(uint8_t addr)
@@ -10,21 +24,28 @@ xOC05::xOC05(uint8_t addr)
   PCA9685_I2C_ADDRESS = addr;
 }
 
+/*************************************************************
+  Configure Driver
+*************************************************************/
 bool xOC05::begin(void)
 {
-  reset();
+  xCore.write8(I2C_ADDRESS, PCA9685_MODE1, PCA9685_RESTART);
   return true;
 }
 
+/*************************************************************
+  Reset Driver
+*************************************************************/
 void xOC05::reset(void)
 {
   uint8_t mode1_content = readPCA9685(PCA9685_MODE1);
-  if((mode1_content >> 7) == 0x01) {
+  if((mode1_content >> 7) == 0x01) {  // test for logic 1 in restart bit.
     xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, ((mode1_content & 0x7F) | (0xEF)));
     delay(500);
-    xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, (mode1_content | PCA9685_RESTART));
+    mode1_content = readPC9685(PCA9685_MODE1);
+    xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, (mode1_content | PCA9685_RESTART) & 0xFF);
   } else {
-    xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, 0x80);
+    xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, (PCA9685_RESTART | mode1_content));
     delay(10);
   }
 }
@@ -34,6 +55,9 @@ void xOC05::sleep(bool sleep_state = false)
   xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, ((readPCA9685(PCA9685_MODE1) & 0x7F) | PCA9685_SLEEP));
 }
 
+/*************************************************************
+  Read the Pulse Width Modulation Frequency
+*************************************************************/
 void xOC05::setPWMFreq(float frequency)
 {
   frequency *= 0.8;
@@ -52,13 +76,16 @@ void xOC05::setPWMFreq(float frequency)
   // configure prescale register
   xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_PRESCALE, prescale_val);
   
-  xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, mode1_content);
-  delay(5);
+  xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, mode1_content | PCA9685_RESTART);
+  delay(500);
 
   // control register automatically increments 
   xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, (PCA9685_AUTOINCR | mode1_content) | 0x80);
 }
 
+/*************************************************************
+  Set the Pulse Width Modulation
+*************************************************************/
 void xOC05::setPWM(uint8_t channel, uint16_t on_point, uint16_t off_point)
 {
   Wire.beginTransmission(PCA9685_I2C_ADDRESS);
@@ -70,6 +97,23 @@ void xOC05::setPWM(uint8_t channel, uint16_t on_point, uint16_t off_point)
   Wire.endTransmission();
 }
 
+/*************************************************************
+  Use OC05 as GPIO
+*************************************************************/
+void xOC05::setChannel(uint8_t channel, bool state);
+{
+  if(state == HIGH) {
+    setPWM(channel, 4096, 0);
+  } else if(state == LOW) {
+    setPWM(channel, 0, 4096);
+  }
+}
+
+/*--Private Class Fucntion--*/
+
+/*************************************************************
+  Read PCA9685 registers
+*************************************************************/
 uint8_t xOC05::readPCA9685(uint8_t cmd)
 {
   uint8_t content = xCore.read8(PCA9685_I2C_ADDRESS, cmd);
