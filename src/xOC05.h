@@ -88,6 +88,7 @@ class xOC05: public xCoreClass
 		* Use channels as GPIO
 		* @param channel, channel selection 1-8 (Conforms with channel numbers on the xchip)
 		* @param state, input HIGH or LOW
+		**/
 		void setChannel(uint8_t channel, bool state);
 
 	private:
