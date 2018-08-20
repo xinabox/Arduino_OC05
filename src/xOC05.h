@@ -1,3 +1,13 @@
+/*
+	This is a library for the OC05
+	Servoi Driver
+	
+	The board uses i2c for communication.
+	
+	The board communicates with the following I2C device:
+	- PCA9685
+*/
+
 #ifndef xOC05_h
 #define xOC05_h
 
@@ -20,15 +30,12 @@
 #define PCA9685_ALLCALLADR	0x05
 
 // LED8 Channel Registers. OC05 uses channels 8-15.
-#define LED8_ON_L			0x26
-#define LED8_ON_H			0x27
-#define LED8_OFF_L			0x28
-#define LED8_OFF_H			0x29
+#define LED8_ON_L		0x26
+#define LED8_ON_H		0x27
+#define LED8_OFF_L		0x28
+#define LED8_OFF_H		0x29
 
-#define ALL_LED_ON_L		0xFA
-#define ALL_LED_ON_H		0xFB
-#define ALL_LED_OFF_L		0xFC
-#define ALL_LED_OFF_H		0xFD
+// Prescale Register
 #define PCA9685_PRESCALE	0xFE
 
 class xOC05: public xCoreClass
@@ -63,18 +70,25 @@ class xOC05: public xCoreClass
 		/**
 		* Sets the frequency of PWM
 		* Call and input a frequency before using PWM
-		* @param frequency, frequency of pwm
+		* @param channel, channel selection 1-8
+		* @param on_point, point within the 4096 boundary at which the channel turns on
+		* @param off_point, point within the 4096 boundary at whichs the channels turns off
 		*/
 		void setPWMFreq(float frequency);
 
 		/**
-		* Sets the frequency of PWM
-		* Call and input a frequency before using PWM
+		* Sets the PWM
 		* @param channel, channel selection 1-8
 		* @param on_point, point within the 4096 boundary at which the channel turns on
 		* @param off_point, point within the 4096 boundary at whichs the channels turns off
 		*/
 		void setPWM(uint8_t channel, uint16_t on_point, uint16_t off_point);
+		
+		/**
+		* Use channels as GPIO
+		* @param channel, channel selection 1-8 (Conforms with channel numbers on the xchip)
+		* @param state, input HIGH or LOW
+		void setChannel(uint8_t channel, bool state);
 
 	private:
 
