@@ -50,7 +50,7 @@ void xOC05::reset(void)
   }
 }
 
-void xOC05::sleep(bool sleep_state = false)
+void xOC05::sleep(void)
 {
   xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, ((readPCA9685(PCA9685_MODE1) & 0x7F) | PCA9685_SLEEP));
 }
