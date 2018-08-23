@@ -100,7 +100,7 @@ void xOC05::setPWM(uint8_t channel, uint16_t on_point, uint16_t off_point)
 /*************************************************************
   Use OC05 as GPIO
 *************************************************************/
-void xOC05::setChannel(uint8_t channel, bool state);
+void xOC05::setChannel(uint8_t channel, bool state)
 {
   if(state == HIGH) {
     setPWM(channel, 4096, 0);
