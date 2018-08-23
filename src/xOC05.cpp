@@ -29,7 +29,7 @@ xOC05::xOC05(uint8_t addr)
 *************************************************************/
 bool xOC05::begin(void)
 {
-  xCore.write8(I2C_ADDRESS, PCA9685_MODE1, PCA9685_RESTART);
+  xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, PCA9685_RESTART);
   return true;
 }
 
