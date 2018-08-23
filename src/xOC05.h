@@ -65,7 +65,7 @@ class xOC05: public xCoreClass
 		* Puts driver to sleep. 
 		* Call whenever restart desired.
 		*/
-		void sleep(bool sleep_state);
+		void sleep(void);
 
 		/**
 		* Sets the frequency of PWM
