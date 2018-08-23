@@ -42,7 +42,7 @@ void xOC05::reset(void)
   if((mode1_content >> 7) == 0x01) {  // test for logic 1 in restart bit.
     xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, ((mode1_content & 0x7F) | (0xEF)));
     delay(500);
-    mode1_content = readPC9685(PCA9685_MODE1);
+    mode1_content = readPCA9685(PCA9685_MODE1);
     xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, (mode1_content | PCA9685_RESTART) & 0xFF);
   } else {
     xCore.write8(PCA9685_I2C_ADDRESS, PCA9685_MODE1, (PCA9685_RESTART | mode1_content));
