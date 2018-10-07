@@ -1,10 +1,23 @@
+/*************************************************************
+	This is an examples for the OC05
+	Servo Motor Controller
+	
+	You can buy one on our store!
+	-----> https://xinabox.cc/products/OC05/
+	
+	This examples rotates a servo motor
+	
+	The sensor communicates over the I2C Bus.
+	
+*************************************************************/
+
+/********************* Library Includes *********************/
 #include <xCore.h>
-#include <xOC05.h>
+#include <Arduino_OC05.h>  // https://github.com/xinabox/Arduino_OC05
 
 xOC05 OC05;
 
 unsigned long tick_Move;
-
 
 #define SERVO_MAX 600
 #define SERVO_MIN 150

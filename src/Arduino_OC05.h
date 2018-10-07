@@ -8,8 +8,8 @@
 	- PCA9685
 */
 
-#ifndef xOC05_h
-#define xOC05_h
+#ifndef Arduino_OC05_h
+#define Arduino_OC05_h
 
 #include <xCore.h>
 #include <Arduino.h>
@@ -89,7 +89,7 @@ class xOC05: public xCoreClass
 		* @param channel, channel selection 1-8 (Conforms with channel numbers on the xchip)
 		* @param state, input HIGH or LOW
 		**/
-		void setChannel(uint8_t channel, bool state);
+		void digitalWrite(uint8_t channel, bool state);
 
 	private:
 
