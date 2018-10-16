@@ -8,8 +8,8 @@
 	- PCA9685
 */
 
-#ifndef Arduino_OC05_h
-#define Arduino_OC05_h
+#ifndef arduino-OC05_h
+#define arduino-OC05_h
 
 #include <xCore.h>
 #include <Arduino.h>

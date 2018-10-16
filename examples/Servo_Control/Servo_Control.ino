@@ -13,7 +13,7 @@
 
 /********************* Library Includes *********************/
 #include <xCore.h>
-#include <Arduino_OC05.h>  // https://github.com/xinabox/Arduino_OC05
+#include <arduino-OC05.h>  // https://github.com/xinabox/arduino-OC05
 
 xOC05 OC05;
 
