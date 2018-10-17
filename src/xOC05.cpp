@@ -8,7 +8,7 @@
   - PCA9685
 */
 
-#include "arduino-OC05.h"
+#include "xOC05.h"
 /*--Public Class Function--*/
 
 /*************************************************************
