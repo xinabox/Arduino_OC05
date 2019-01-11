@@ -38,6 +38,10 @@
 // Prescale Register
 #define PCA9685_PRESCALE	0xFE
 
+//Pulse Lengths Calibration
+#define SERVOMIN  130 // this is the 'minimum' pulse length count (out of 4096)
+#define SERVOMAX  450 // this is the 'maximum' pulse length count (out of 4096)
+
 class xOC05: public xCoreClass
 {
 	public:
@@ -82,7 +86,14 @@ class xOC05: public xCoreClass
 		* @param on_point, point within the 4096 boundary at which the channel turns on
 		* @param off_point, point within the 4096 boundary at whichs the channels turns off
 		*/
-		void setPWM(uint8_t channel, uint16_t on_point, uint16_t off_point);
+		void setPWM(uint8_t channel, uint16_t off_point);
+		
+		/**
+		* Sets the Position
+		* @param channel, channel selection 1-8
+		* @param pos, point between -90 and 90 degrees
+		*/
+		void setPosition(uint8_t channel, int pos);
 		
 		/**
 		* Use channels as GPIO
