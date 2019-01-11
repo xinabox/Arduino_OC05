@@ -86,8 +86,10 @@ void xOC05::setPWMFreq(float frequency)
 /*************************************************************
   Set the Pulse Width Modulation
 *************************************************************/
-void xOC05::setPWM(uint8_t channel, uint16_t on_point, uint16_t off_point)
+void xOC05::setPWM(uint8_t channel, uint16_t off_point)
 {
+	uint16_t on_point = 0;
+	
   Wire.beginTransmission(PCA9685_I2C_ADDRESS);
   Wire.write(LED8_ON_L + (4 * (channel - 1)));
   Wire.write(on_point);
@@ -98,14 +100,24 @@ void xOC05::setPWM(uint8_t channel, uint16_t on_point, uint16_t off_point)
 }
 
 /*************************************************************
+  Set the Servo Position in Degrees
+*************************************************************/
+void xOC05::setPosition(uint8_t channel, int pos) {
+  pos = constrain(pos, -90, 90);
+  pos = map(pos, -90, 90, SERVOMIN, SERVOMAX);
+  
+  setPWM((channel), (uint16_t)pos);
+}
+
+/*************************************************************
   Use OC05 as GPIO
 *************************************************************/
 void xOC05::digitalWrite(uint8_t channel, bool state)
 {
   if(state == HIGH) {
-    setPWM(channel, 4096, 0);
+    setPWM(channel, 4096);
   } else if(state == LOW) {
-    setPWM(channel, 0, 4096);
+    setPWM(channel, 0);
   }
 }
 
