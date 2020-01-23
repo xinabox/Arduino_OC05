@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/xinabox/arduino-OC05.svg?branch=master)](https://travis-ci.org/xinabox/arduino-OC05)
+
 # ☒CHIP OC05
 <img src="extras/OC05 V0.5.0.JPG" width="35%" height="auto" align="right">
 Servo Controller
